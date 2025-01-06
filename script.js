@@ -10,19 +10,23 @@ const products = [
   { id: 5, name: "Cherry", price: 50 },
 ];
 
+// Render the list of products
 function renderProduct() {
-  products.forEach((item, index) => {
+  productList.innerHTML = ""; // Clear the product list before rendering
+  products.forEach((item) => {
     let prdListli = document.createElement("li");
     let addToCartBtn = document.createElement("button");
     addToCartBtn.innerHTML = "Add to Cart";
     addToCartBtn.id = `id-${item.id}`;
     addToCartBtn.onclick = () => addToCart(item);
-    prdListli.innerHTML = `${item.name} ${item.price}`;
+
+    prdListli.innerHTML = `${item.name} - $${item.price}`;
     prdListli.append(addToCartBtn);
     productList.append(prdListli);
   });
 }
 
+// Add item to the cart
 function addToCart(item) {
   let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
   cart.push(item);
@@ -30,35 +34,31 @@ function addToCart(item) {
   renderCart();
 }
 
+// Render the cart
 function renderCart() {
-  let cartListli = document.createElement("li");
-
+  cartList.innerHTML = ""; // Clear the cart list before rendering
   const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
 
   if (cart.length === 0) {
-    cartList.textContent = "";
+    cartList.textContent = "Your cart is empty.";
   } else {
     cart.forEach((item) => {
       const li = document.createElement("li");
-      cartListli.innerHTML = `${item.name} ${item.price}`;
-      cartList.append(cartListli);
+      li.innerHTML = `${item.name} - $${item.price}`;
+      cartList.append(li);
     });
   }
 }
 
+// Clear the cart
 function clearCart() {
-  clearCartBtn.addEventListener("click", () => {
-    sessionStorage.removeItem("cart");
-    renderCart();
-  });
+  sessionStorage.removeItem("cart");
+  renderCart();
 }
 
+// Initialize the app when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
   renderProduct();
   renderCart();
-  clearCart();
-});
-
-beforeEach(() => {
-  sessionStorage.clear();
+  clearCartBtn.addEventListener("click", clearCart);
 });
