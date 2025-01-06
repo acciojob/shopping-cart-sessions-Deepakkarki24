@@ -11,21 +11,21 @@ const products = [
 ];
 
 // Render the list of products
-function renderProduct() {
-  if (!productList) return; // Prevent errors if the product list is missing
-  productList.innerHTML = ""; // Clear the product list before rendering
-  products.forEach((item) => {
-    let prdListli = document.createElement("li");
-    let addToCartBtn = document.createElement("button");
-    addToCartBtn.innerHTML = "Add to Cart";
-    addToCartBtn.id = `id-${item.id}`;
-    addToCartBtn.onclick = () => addToCart(item);
+// function renderProduct() {
+//   if (!productList) return; // Prevent errors if the product list is missing
+//   productList.innerHTML = ""; // Clear the product list before rendering
+//   products.forEach((item) => {
+//     let prdListli = document.createElement("li");
+//     let addToCartBtn = document.createElement("button");
+//     addToCartBtn.innerHTML = "Add to Cart";
+//     addToCartBtn.id = `id-${item.id}`;
+//     addToCartBtn.onclick = () => addToCart(item);
 
-    prdListli.innerHTML = `${item.name} - ${item.price}`;
-    prdListli.append(addToCartBtn);
-    productList.append(prdListli);
-  });
-}
+//     prdListli.innerHTML = `${item.name} - ${item.price}`;
+//     prdListli.append(addToCartBtn);
+//     productList.append(prdListli);
+//   });
+// }
 
 // Add item to the cart
 function addToCart(item) {
