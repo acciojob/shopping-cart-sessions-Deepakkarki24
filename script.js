@@ -2,19 +2,21 @@ let productList = document.getElementById("product-list");
 let cartList = document.getElementById("cart-list");
 let clearCartBtn = document.getElementById("clear-cart-btn");
 
-// const products = [
-//   { id: 1, name: "Apple", price: 10 },
-//   { id: 2, name: "Mango", price: 20 },
-//   { id: 3, name: "Banana", price: 30 },
-//   { id: 4, name: "Grapes", price: 40 },
-//   { id: 5, name: "Cherry", price: 50 },
-// ];
-
-let products = ["hello", "hello2"];
+const products = [
+  { id: 1, name: "Apple", price: 10 },
+  { id: 2, name: "Mango", price: 20 },
+  { id: 3, name: "Banana", price: 30 },
+  { id: 4, name: "Grapes", price: 40 },
+  { id: 5, name: "Cherry", price: 50 },
+];
 
 // Render the list of products
 function renderProduct() {
-  if (!productList) return; // Prevent errors if the product list is missing
+  if (!productList) {
+    console.error("Product list element is missing!");
+    return;
+  }
+
   productList.innerHTML = ""; // Clear the product list before rendering
   products.forEach((item) => {
     let prdListli = document.createElement("li");
@@ -39,7 +41,11 @@ function addToCart(item) {
 
 // Render the cart
 function renderCart() {
-  if (!cartList) return; // Prevent errors if the cart list is missing
+  if (!cartList) {
+    console.error("Cart list element is missing!");
+    return;
+  }
+
   cartList.innerHTML = ""; // Clear the cart list before rendering
   const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
 
@@ -54,24 +60,30 @@ function renderCart() {
   }
 }
 
-// Clear the cart
+// Clear the cart with confirmation
 function clearCart() {
-  sessionStorage.removeItem("cart");
-  renderCart();
+  if (confirm("Are you sure you want to clear the cart?")) {
+    sessionStorage.removeItem("cart");
+    renderCart();
+  }
 }
 
 // Initialize the app when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
-  if (clearCartBtn) {
-    clearCartBtn.addEventListener("click", clearCart);
+  if (!productList || !cartList || !clearCartBtn) {
+    console.error("Required DOM elements are missing!");
+    return;
   }
+
   renderProduct();
   renderCart();
+
+  // Check if clearCartBtn exists before adding the event listener
+  clearCartBtn.addEventListener("click", clearCart);
 });
 
-// Ignore uncaught exceptions in Cypress
-Cypress.on('uncaught:exception', (err, runnable) => {
-  // returning false here prevents Cypress from
-  // failing the test
-  return false;
-});
+// Handle uncaught exceptions in Cypress
+// Cypress.on("uncaught:exception", (err, runnable) => {
+//   // returning false here prevents Cypress from failing the test
+//   return false;
+// });
