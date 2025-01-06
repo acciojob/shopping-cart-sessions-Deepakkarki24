@@ -53,9 +53,12 @@ function clearCart() {
   });
 }
 
-clearCart();
-
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", () => {
   renderProduct();
   renderCart();
-};
+  clearCart();
+});
+
+beforeEach(() => {
+  sessionStorage.clear();
+});
