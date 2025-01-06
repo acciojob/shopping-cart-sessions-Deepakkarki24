@@ -44,7 +44,7 @@ function renderCart() {
   } else {
     cart.forEach((item) => {
       const li = document.createElement("li");
-      li.innerHTML = `${item.name} - ${item.price}`;
+      li.innerHTML = `${item.name} -${item.price}`;
       cartList.append(li);
     });
   }
