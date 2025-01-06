@@ -12,6 +12,7 @@ const products = [
 
 // Render the list of products
 function renderProduct() {
+  if (!productList) return; // Prevent errors if the product list is missing
   productList.innerHTML = ""; // Clear the product list before rendering
   products.forEach((item) => {
     let prdListli = document.createElement("li");
@@ -36,6 +37,7 @@ function addToCart(item) {
 
 // Render the cart
 function renderCart() {
+  if (!cartList) return; // Prevent errors if the cart list is missing
   cartList.innerHTML = ""; // Clear the cart list before rendering
   const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
 
@@ -44,7 +46,7 @@ function renderCart() {
   } else {
     cart.forEach((item) => {
       const li = document.createElement("li");
-      li.innerHTML = `${item.name} -${item.price}`;
+      li.innerHTML = `${item.name} - ${item.price}`;
       cartList.append(li);
     });
   }
@@ -58,14 +60,16 @@ function clearCart() {
 
 // Initialize the app when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
+  if (clearCartBtn) {
+    clearCartBtn.addEventListener("click", clearCart);
+  }
   renderProduct();
   renderCart();
-  clearCartBtn.addEventListener("click", clearCart);
 });
 
-
+// Ignore uncaught exceptions in Cypress
 Cypress.on('uncaught:exception', (err, runnable) => {
   // returning false here prevents Cypress from
   // failing the test
-  return false
-})
+  return false;
+});
