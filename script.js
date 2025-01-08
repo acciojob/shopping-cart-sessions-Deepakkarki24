@@ -50,7 +50,9 @@ function renderCart() {
   const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
 
   if (cart.length === 0) {
-    cartList.textContent = "Your cart is empty.";
+    const placeholder = document.createElement("li");
+    placeholder.textContent = "Your cart is empty.";
+    cartList.append(placeholder);
   } else {
     cart.forEach((item) => {
       const li = document.createElement("li");
@@ -81,9 +83,3 @@ document.addEventListener("DOMContentLoaded", () => {
   // Check if clearCartBtn exists before adding the event listener
   clearCartBtn.addEventListener("click", clearCart);
 });
-
-// Handle uncaught exceptions in Cypress
-// Cypress.on("uncaught:exception", (err, runnable) => {
-//   // returning false here prevents Cypress from failing the test
-//   return false;
-// });
