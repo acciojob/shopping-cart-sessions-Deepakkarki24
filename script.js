@@ -36,55 +36,31 @@ function renderProduct() {
 // Add item to the cart
 function addToCart(item) {
   let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-
-  // Ensure no duplicate entries
-  const existingItem = cart.find((cartItem) => cartItem.id === item.id);
-  if (!existingItem) {
-    cart.push(item);
-  }
-
+  cart.push(item);
   sessionStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
 }
 
 // Render the cart
 function renderCart() {
-  if (!cartList) {
-    console.error("Cart list element is missing!");
-    return;
-  }
-
   cartList.innerHTML = ""; // Clear the cart list before rendering
   const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
 
-  if (cart.length === 0) {
-    const placeholder = document.createElement("li");
-    placeholder.textContent = "Your cart is empty.";
-    cartList.append(placeholder);
-  } else {
-    cart.forEach((item) => {
-      const li = document.createElement("li");
-      li.innerHTML = `${item.name} - ${item.price}`;
-      cartList.append(li);
-    });
-  }
+  cart.forEach((item) => {
+    const li = document.createElement("li");
+    li.innerHTML = `${item.name} - ${item.price}`;
+    cartList.append(li);
+  });
 }
 
 // Clear the cart with confirmation
 function clearCart() {
-  if (confirm("Are you sure you want to clear the cart?")) {
-    sessionStorage.removeItem("cart");
-    renderCart();
-  }
+  sessionStorage.removeItem("cart");
+  renderCart();
 }
 
 // Initialize the app when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
-  if (!productList || !cartList || !clearCartBtn) {
-    console.error("Required DOM elements are missing!");
-    return;
-  }
-
   renderProduct();
   renderCart();
 
