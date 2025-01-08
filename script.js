@@ -1,3 +1,5 @@
+// Updated JavaScript Code to Fix Issues
+
 let productList = document.getElementById("product-list");
 let cartList = document.getElementById("cart-list");
 let clearCartBtn = document.getElementById("clear-cart-btn");
