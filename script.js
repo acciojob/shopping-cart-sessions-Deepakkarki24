@@ -36,7 +36,13 @@ function renderProduct() {
 // Add item to the cart
 function addToCart(item) {
   let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-  cart.push(item);
+
+  // Ensure no duplicate entries
+  const existingItem = cart.find((cartItem) => cartItem.id === item.id);
+  if (!existingItem) {
+    cart.push(item);
+  }
+
   sessionStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
 }
